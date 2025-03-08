@@ -60,4 +60,12 @@ public class ParticipantService {
 
         return Optional.empty();
     }
+
+    /**
+     * Deletes a participant by its id.
+     * @param id
+     */
+    public void deleteParticipantById(Long id) {
+        participantRepository.deleteById(id);
+    }
 }

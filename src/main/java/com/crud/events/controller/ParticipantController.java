@@ -71,4 +71,15 @@ public class ParticipantController {
 
         return ResponseEntity.notFound().build();
     }
+
+    /**
+     * Deletes a participant by its id.
+     * @param id
+     * @return ResponseEntity.ok()
+     */
+    @DeleteMapping("/delete-by-id/{id}")
+    public ResponseEntity<Participant> deleteParticipantById(@PathVariable Long id) {
+        participantService.deleteParticipantById(id);
+        return ResponseEntity.ok().build();
+    }
 }
