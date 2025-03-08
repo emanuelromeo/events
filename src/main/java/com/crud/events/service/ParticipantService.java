@@ -1,5 +1,6 @@
 package com.crud.events.service;
 
+import com.crud.events.entity.Event;
 import com.crud.events.entity.Participant;
 import com.crud.events.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,25 @@ public class ParticipantService {
      */
     public Participant saveParticipant(Participant participant) {
         return participantRepository.save(participant);
+    }
+
+    /**
+     * Updates a participant by its id with values from the given participant.
+     * @param id
+     * @param updatedParticipant
+     * @return an optional containing the updated participant or Optional.empty() if none found.
+     */
+    public Optional<Participant> updateParticipant(Long id, Participant updatedParticipant) {
+        Optional<Participant> optionalParticipant = participantRepository.findById(id);
+
+        if (optionalParticipant.isPresent()) {
+            optionalParticipant.get().setName(updatedParticipant.getName());
+            optionalParticipant.get().setEmail(updatedParticipant.getEmail());
+
+            Participant savedParticipant = participantRepository.save(optionalParticipant.get());
+            return Optional.of(savedParticipant);
+        }
+
+        return Optional.empty();
     }
 }

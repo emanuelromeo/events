@@ -1,5 +1,6 @@
 package com.crud.events.controller;
 
+import com.crud.events.entity.Event;
 import com.crud.events.entity.Participant;
 import com.crud.events.service.ParticipantService;
 import jakarta.persistence.*;
@@ -32,7 +33,7 @@ public class ParticipantController {
      * @param id
      * @return a response entity containing the participant with the given id or ResponseEntity.notFound() if none found.
      */
-    @GetMapping("select-by-id/{id}")
+    @GetMapping("/select-by-id/{id}")
     public ResponseEntity<Participant> findParticipantById(@PathVariable Long id) {
         Optional<Participant> participantOptional = participantService.findParticipantById(id);
 
@@ -48,9 +49,26 @@ public class ParticipantController {
      * @param participant
      * @return a response entity containing the saved participant.
      */
-    @PostMapping("create")
+    @PostMapping("/create")
     public ResponseEntity<Participant> saveParticipant(@RequestBody Participant participant) {
         Participant savedParticipant = participantService.saveParticipant(participant);
         return ResponseEntity.ok(savedParticipant);
+    }
+
+    /**
+     * Updates a participant by its id with values from the given participant.
+     * @param id
+     * @param updatedParticipant
+     * @return a response entity containing the updated participant or ResponseEntity.notFound() if none found.
+     */
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Participant> updateParticipant(@PathVariable Long id, @RequestBody Participant updatedParticipant) {
+        Optional<Participant> optionalParticipant = participantService.updateParticipant(id, updatedParticipant);
+
+        if (optionalParticipant.isPresent()) {
+            return ResponseEntity.ok(optionalParticipant.get());
+        }
+
+        return ResponseEntity.notFound().build();
     }
 }
