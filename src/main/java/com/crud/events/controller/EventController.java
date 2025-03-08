@@ -53,4 +53,21 @@ public class EventController {
         return ResponseEntity.ok(savedEvent);
     }
 
+    /**
+     * Updates an event by its id with values from the given event.
+     * @param id
+     * @param updatedEvent
+     * @return a response entity containing the updated event or ResponseEntity.notFound() if none found.
+     */
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event updatedEvent) {
+        Optional<Event> optionalEvent = eventService.updateEvent(id, updatedEvent);
+
+        if (optionalEvent.isPresent()) {
+            return ResponseEntity.ok(optionalEvent.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
 }

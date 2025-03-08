@@ -40,5 +40,25 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    /**
+     * Updates an event by its id with values from the given event.
+     * @param id
+     * @param updatedEvent
+     * @return an optional containing the updated event or Optional.empty() if none found.
+     */
+    public Optional<Event> updateEvent(Long id, Event updatedEvent) {
+        Optional<Event> optionalEvent = eventRepository.findById(id);
+
+        if (optionalEvent.isPresent()) {
+            optionalEvent.get().setName(updatedEvent.getName());
+            optionalEvent.get().setEventType(updatedEvent.getEventType());
+
+            Event savedEvent = eventRepository.save(optionalEvent.get());
+            return Optional.of(savedEvent);
+        }
+
+        return Optional.empty();
+    }
+
 
 }
