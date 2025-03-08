@@ -1,6 +1,7 @@
 package com.crud.events.controller;
 
 import com.crud.events.entity.Event;
+import com.crud.events.entity.Participant;
 import com.crud.events.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -70,4 +71,14 @@ public class EventController {
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Deletes an event by its id.
+     * @param id
+     * @return ResponseEntity.ok()
+     */
+    @DeleteMapping("/delete-by-id/{id}")
+    public ResponseEntity<Event> deleteEventById(@PathVariable Long id) {
+        eventService.deleteEventById(id);
+        return ResponseEntity.ok().build();
+    }
 }

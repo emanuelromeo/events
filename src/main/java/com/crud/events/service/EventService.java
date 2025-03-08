@@ -60,5 +60,12 @@ public class EventService {
         return Optional.empty();
     }
 
+    /**
+     * Deletes an event by its id.
+     * @param id
+     */
+    public void deleteEventById(Long id) {
+        eventRepository.deleteById(id);
+    }
 
 }
